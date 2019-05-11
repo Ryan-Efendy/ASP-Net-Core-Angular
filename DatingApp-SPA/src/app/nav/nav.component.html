@@ -34,6 +34,7 @@
         <li class="nav-item">
             <a
                 class="nav-link "
+                *ngIf="logginIn()"
                 (click)="logout()"
                 href="#"
             >
