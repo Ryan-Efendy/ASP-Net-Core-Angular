@@ -55,12 +55,13 @@
             <div class="tab-panel">
                 <tabset class="member-tabset">
                     <!-- ---------------------------------------------------------------------------------------- -->
-                    <form
-                        #editForm="ngForm"
-                        id="editForm"
-                        (ngSubmit)="updateUser()"
-                    >
-                        <tab heading="Edit profile">
+                    <tab heading="Edit profile">
+                        <form
+                            #editForm="ngForm"
+                            id="editForm"
+                            (ngSubmit)="updateUser()"
+                        >
+
                             <h4>Description</h4>
                             <textarea
                                 name="introduction"
@@ -82,6 +83,7 @@
                                 class="form-control"
                                 [(ngModel)]="user.interests"
                             ></textarea>
+                            <h4>Location details:</h4>
                             <div class="form-inline">
                                 <label for="city">City</label>
                                 <input
@@ -98,13 +100,12 @@
                                     [(ngModel)]="user.country"
                                 >
                             </div>
-                        </tab>
-                    </form>
-
-                    <tab heading="Edit photos">
-                        <p>photo edit would go here</p>
+                        </form>
                     </tab>
 
+                    <tab heading="Edit photos">
+                        <app-photo-editor [photos]="user.photos"></app-photo-editor>
+                    </tab>
                 </tabset>
             </div>
         </div>
