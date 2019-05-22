@@ -17,7 +17,7 @@ namespace DatingApp.API.Controllers
     [Authorize]
     [Route("api/users/{userId}/photos")]
     [ApiController]
-    public class PhotoController : ControllerBase
+    public class PhotosController : ControllerBase
     {
         // IOptions for getting cloudinary configuration from service startup.cs
         private readonly IDatingRepository _repo;
@@ -25,7 +25,7 @@ namespace DatingApp.API.Controllers
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         private Cloudinary _cloudinary;
 
-        public PhotoController(
+        public PhotosController(
             IDatingRepository repo,
             IMapper mapper,
             IOptions<CloudinarySettings> cloudinaryConfig)
@@ -124,9 +124,44 @@ namespace DatingApp.API.Controllers
 
             if (await _repo.SaveAll())
                 return NoContent();
-            
+
             return BadRequest("Could not set photo to main");
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePhoto(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var user = await _repo.GetUser(userId);
+
+            if (!user.Photos.Any(p => p.Id == id))
+                return Unauthorized();
+
+            var photoFromRepo = await _repo.GetPhoto(id);
+
+            if (photoFromRepo.IsMain)
+                return BadRequest("You cannot delete your main photo");
+
+            if (photoFromRepo.PublicId != null)
+            {
+                var result = _cloudinary.Destroy(new DeletionParams(photoFromRepo.PublicId));
+
+                if (result.Result == "ok")
+                {
+                    _repo.Delete(photoFromRepo);
+                }
+            }
+            else
+            {
+                _repo.Delete(photoFromRepo);
+            }
+
+            if (await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Failed to delete the photo");
+        }
     }
 }

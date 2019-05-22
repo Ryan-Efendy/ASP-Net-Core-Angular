@@ -24,7 +24,10 @@ export class UserService {
   }
 
   setMainPhoto(userId: number, id: number) {
-    // because of post method u must specify body
-    return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + id + '/setMain', {});
+    return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + id + '/setMain', {}); // because of post method u must specify body
+  }
+
+  deletePhoto(userId: number, id: number) {
+    return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + id);
   }
 }
