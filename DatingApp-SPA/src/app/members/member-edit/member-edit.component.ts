@@ -12,7 +12,7 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
-// żeby dotrzeć do editForma w HTML
+  // żeby dotrzeć do editForma w HTML
   @ViewChild('editForm') editForm: NgForm;
 
   user: User;
@@ -24,7 +24,7 @@ export class MemberEditComponent implements OnInit {
     }
   }
   constructor(private route: ActivatedRoute, private alertify: AlertifyService, private authService: AuthService,
-              private userService: UserService) { }
+    private userService: UserService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -40,4 +40,7 @@ export class MemberEditComponent implements OnInit {
     });
   }
 
+  updateMainPhoto(photoUrl) {
+    this.user.photoUrl = photoUrl;
+  }
 }

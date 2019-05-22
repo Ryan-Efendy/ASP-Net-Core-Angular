@@ -11,7 +11,10 @@
         <div class="text-center">
             <button
                 type="button"
-                class="btn btn-sm"
+                class="btn btn-sm mr-1"
+                (click)="setMainPhoto(photo)"
+                [ngClass]="photo.isMain ? 'btn btn-success active' : 'btn btn-secondary'"
+                [disabled]="photo.isMain"
             >
                 Main
             </button>
