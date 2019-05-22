@@ -18,7 +18,7 @@ export class AuthService {
   currentPhotoUrl = this.photoUrl.asObservable();
   constructor(private http: HttpClient) { } // common/http
 
-  ChangeMemberPhoto(photoUrl: string) {
+  changeMemberPhoto(photoUrl: string) {
     this.photoUrl.next(photoUrl);
   }
 
@@ -31,13 +31,13 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(user.user));
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
           this.currentUser = user.user;
-          this.ChangeMemberPhoto(this.currentUser.photoUrl);
+          this.changeMemberPhoto(this.currentUser.photoUrl);
         }
       }
       ));
   }
-  register(model: any) {
-    return this.http.post(this.base + 'register', model);
+  register(user: User) {
+    return this.http.post(this.base + 'register', user);
   }
 
   loggedIn() {
