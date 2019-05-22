@@ -52,11 +52,17 @@
             class="dropdown"
             dropdown
         >
+            <span class="mr-2">
+                <img
+                    src="{{authService.currentUser && authService.currentUser.photoUrl}}"
+                    alt
+                >
+            </span>
             <a
                 class="dropdown-toggle text-light"
                 dropdownToggle
             >
-                Welcome {{authService.decodedToken?.unique_name | titlecase}}
+                Welcome {{authService.dekodedToken?.unique_name | titlecase}}
             </a>
 
             <div
@@ -115,4 +121,5 @@
         </form>
 
     </div>
+
 </nav>
