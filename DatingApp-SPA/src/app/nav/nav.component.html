@@ -54,7 +54,7 @@
         >
             <span class="mr-2">
                 <img
-                    src="{{authService.currentUser && authService.currentUser.photoUrl}}"
+                    src="{{photoUrl}}"
                     alt
                 >
             </span>
@@ -62,7 +62,7 @@
                 class="dropdown-toggle text-light"
                 dropdownToggle
             >
-                Welcome {{authService.dekodedToken?.unique_name | titlecase}}
+                Welcome {{authService.decodedToken?.unique_name | titlecase}}
             </a>
 
             <div

@@ -10,9 +10,11 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 })
 export class NavComponent implements OnInit {
   model: any = {};
+  photoUrl: string;
   constructor(public authService: AuthService, private alertifyService: AlertifyService, private router: Router) { }
 
   ngOnInit() {
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   login() {
